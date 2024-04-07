@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Chat</title>
+  <link rel="icon" type="image/jpeg" href="icon.jpeg">
+  <link rel="apple-touch-icon" href="icon.png">
+  <meta charset="UTF-8">
+  <meta name="google-adsense-account" content="ca-pub-3728169738096191">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3728169738096191"
+     crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-3728169738096191">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    body {
+      display: flex;
+      height:92vh;
+      margin: 0;
+    }
+    #circle {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: green; 
+      position:absolute;
+      top:-3%;
+      right:5%;
+      margin: 50px auto;
+    }
+
+    #us {
+      width:90%;
+      margin: 10px auto;
+      left:5px;
+
+    }
+
+    #ss {
+      border-right: 1px solid #c0c0c0;
+      /*text-align: center;*/
+      font-weight: 800;
+      background:#E0E0E0;
+      overflow-y: auto;
+    }
+
+    #chatContainer {
+      flex: 4;
+      display: flex;
+      justify-content:center;
+      flex-direction: column;
+      padding:0;
+      border:0;
+    }
+
+    #chatHeader {
+      flex: 0.1;
+      height:;
+      background: #007bff;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      border-bottom: 3px solid #c0c0c0;
+      font-size: 26px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      /*border-bottom: 2px solid #0056b3;*/
+      border-radius:0;
+    }
+
+    #chatMessages {
+      height:800%;
+      padding: 10px;
+      overflow-y: scroll;
+      border-radius:0;
+      margin-top:0;
+      background:#E0E0E0;
+    }
+
+    #chatInput {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content:space-between;
+      border-top: 1px solid #c0c0c0;
+      border-radius:0;
+      margin-top:0px;
+    }
+
+    #chatInput input {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid black;
+      border-radius: 20px;
+      margin-right: 10px;
+    }
+
+    #sendButton {
+      background: #28a745;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #sendButton:hover {
+      background: #218838;
+    }
+
+    .user {
+      display:flex;
+      width:100%;
+      justify-content:flex-end;
+      align-items: center;
+      flex-direction:row-reverse;
+      cursor: pointer;
+      padding: 20px;
+      border-radius:0px;
+      border-top:10px;
+      border-bottom:10px;
+      color:black;
+      border:black;
+      border-bottom:2px solid grey;
+      background:#007bff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: background-color 0.3s;
+      overflow-x:auto;
+    }
+
+    #user--img{
+      position: absoulte;
+      width:50px;
+      height:50px;
+      border-radius:50%;
+      background:white;
+      border: 2px solid black;
+      margin-right:10px;
+    }
+
+    .user:hover {
+      background: #f0f0f0;
+    }
+
+    .message-container {
+      display: flex;
+      flex-direction: column;
+      margin-top:5px;
+    }
+
+    .message-bubble,
+    .timestamp {
+      cursor: pointer;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      border-radius: 0px 20px 20px 20px;
+      padding: 7px;
+      margin: 10px;
+      display: inline-block;
+      max-width: 70%;
+      word-wrap: break-word;
+      z-index: 1;
+    }
+
+    .message-bubblei,
+    .timestampi {
+      cursor: pointer;
+      z-index: 1;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      border-radius: 20px 0px 20px 20px;
+      padding: 7px;
+      margin: 10px;
+      display: inline-block;
+      max-width: 70%;
+      word-wrap: break-word;
+    }
+
+    .message-bubble {
+      background: #007bff;
+      color: #fff;
+      align-self: flex-start;
+    }
+
+    .group_display{
+      background: #6c81eb;
+      color:black;
+      align-self: center;
+      padding:15px;
+      border:none;
+      border-radius:20px;
+    }
+
+    .message-bubble.clicked {
+      background: #fff;
+      color: #dc3545;
+    }
+
+    .timestamp {
+      color: #999;
+      font-size: 12px;
+      align-self: flex-start;
+    }
+
+    .message-bubblei {
+      text-align: right;
+      background: #28a745;
+      color: #fff;
+      align-self: flex-end;
+    }
+
+    .timestampi {
+      text-align: right;
+      color: #999;
+      font-size: 12px;
+      align-self: flex-end;
+    }
+
+    #s {
+      /*display: none;*/
+    }
+
+    #toggleSButton {
+      border: none;
+    }
+
+    .burger-menu {
+
+
+      padding: 10px;
+
+      background-color: #007bff;
+      color: #fff;
+    }
+    .burger-icon {
+      cursor: pointer;
+      padding: 10px;
+      display: flex;
+      width:5%;
+      flex-direction: column;
+    }
+    .line {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 3px 0;
+    }
+
+    .menu {
+      opacity:0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      transform-origin: top;
+      position: absolute;
+      top:5%;
+      background-color: #007bff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .menu button {
+      background-color: transparent;
+      border: none;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+      text-align: center;
+    }
+
+    .menu button:hover {
+      background-color: #0056b3;
+    }
+
+    .menur {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      transform-origin: top;
+      position:absolute;
+      background-color: #007bff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index:99387465;
+    }
+
+    .menur button {
+      background-color: transparent;
+      border: none;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+      text-align: center;
+    }
+
+    .menur button:hover {
+      background-color: #0056b3;
+    }
+    footer {
+      text-align: center;
+      background-color: #333;
+      color:white;
+      height:5%;
+      padding: 5px;
+      bottom: 0;
+      width: 100%;
+    }
+
+    footer a {
+      color:white;
+    }
+    #is{
+      border-radius:10px;
+      border:0px solid black;
+      margin-right:5px;
+      background: black;
+    }
+    #is:active{
+      background:grey;
+    }
+    #cli{
+      display:none;
+      flex-direction:column;
+      align-items:center;
+      width:50%;
+      padding:10px;
+      background:grey;
+      border:solid;
+      border-radius:10px;
+      color:white;
+    }
+    #clib{
+      background:linear-gradient(to right ,red,orange);
+      border:none;
+      border-radius:5px;
+      color:black;
+    }
+    #cliii{
+
+    }
+    #clibb{
+      display:flex;
+      flex-direction:column;
+      padding:10px;
+      background:white;
+      border:none;
+      border-radius:5px;
+      color:black;
+      height:100%;
+      width:98%;
+    }
+    .climessu{
+      padding:4px;
+      background:green;
+      border:none;
+      border-radius:10px;
+      word-wrap: break-word;
+    }
+    .climessr{
+      padding:4px;
+      background:blue;
+      border:none;
+      border-radius:10px;
+      word-wrap: break-word;
+    }
+    #cliix{
+      display:flex;
+      flex-direction:row;
+      padding:5px;
+    }
+    #st{
+      background:linear-gradient(to right ,red,orange);
+      border:none;
+      border-radius:5px;
+      color:black;
+    }
+    #notification {
+          display: none;
+          flex-direction:row;
+          align-items:center;
+          background-color: #d4edda; /* Light red background color */
+          color: #155724; /* Dark red text color */
+          height: 50px; /* Increased height for better visibility */
+          text-align: center;
+          border-radius: 8px; /* Slightly rounded corners */
+          position: absolute; /* Fixed position so it stays in place */
+          top: 25px; 
+          padding: 10px; /* Added padding for better spacing */
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 2); /* Drop shadow for depth */
+          animation:slideFromLeft 1s forwards;
+          z-index: 1000; /* Higher z-index for better stacking */
+    }
+
+    #cbb{
+      font-size:25px;
+      background:transparent;
+      text-align:center;
+      color: #155724;
+      border:none;
+    }
+
+    @keyframes slideFromLeft {
+      0% { left: -100px; } /* Starting position (offscreen to the left) */
+      100% { left: 20px; } /* Ending position (left edge of the frame) */
+    }
+  </style>
+
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script type="module">
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const _0x1a0534=_0x167f;(function(_0x174665,_0x23319a){const _0x25fd56=_0x167f,_0x2fd69e=_0x174665();while(!![]){try{const _0x78495e=parseInt(_0x25fd56(0x169))/(0x303+-0x1*-0x11f+-0x421)+-parseInt(_0x25fd56(0x17a))/(-0xd*-0x1df+-0xb0a+-0x3*0x46d)*(-parseInt(_0x25fd56(0x16e))/(-0x37f+0x4f*-0x42+-0x2fc*-0x8))+parseInt(_0x25fd56(0x17d))/(-0x1*0x2303+0xac1*-0x1+0x16e4*0x2)+-parseInt(_0x25fd56(0x170))/(0x1b7*-0x5+-0x107*0x1f+-0x2871*-0x1)+-parseInt(_0x25fd56(0x165))/(0x1*-0x1373+0xa*0x12d+0x7b7)*(parseInt(_0x25fd56(0x162))/(-0x1737+-0x4e6+0x1c24))+-parseInt(_0x25fd56(0x167))/(0x213d+-0x2*-0x66c+0x1*-0x2e0d)+parseInt(_0x25fd56(0x173))/(0xc93+-0x2436+0x3c*0x65)*(parseInt(_0x25fd56(0x168))/(-0x1b97*0x1+0x7*0x37d+0x336));if(_0x78495e===_0x23319a)break;else _0x2fd69e['push'](_0x2fd69e['shift']());}catch(_0x3e9ab3){_0x2fd69e['push'](_0x2fd69e['shift']());}}}(_0xcff4,0x139ef+0x3ae19+0x21*-0xbb9));function _0xcff4(){const _0xd639b6=['10pLJMrt','278000BBeWNC','App','G-6SP4HZTN','.com','13.appspot','33HgRtnR','13.firebas','931475cOiDuf','1816:web:e','AIzaSyDozo','5665131kxuUEd','9957815718','initialize','e3a3f5c855','efa83e2f76','eapp.com','U5wbIwL8g','722NXlyxS','-vine-4070','1:99578157','1024288xjwyZg','917FMQQcV','hpjwzD_W8p','invertible','17478txjtBS','OOGNNsp80f','3016744CnZmPT'];_0xcff4=function(){return _0xd639b6;};return _0xcff4();}const firebaseConfig={'apiKey':_0x1a0534(0x172)+_0x1a0534(0x163)+_0x1a0534(0x166)+_0x1a0534(0x179),'authDomain':_0x1a0534(0x164)+_0x1a0534(0x17b)+_0x1a0534(0x16f)+_0x1a0534(0x178),'projectId':_0x1a0534(0x164)+_0x1a0534(0x17b)+'13','storageBucket':_0x1a0534(0x164)+_0x1a0534(0x17b)+_0x1a0534(0x16d)+_0x1a0534(0x16c),'messagingSenderId':_0x1a0534(0x174)+'16','appId':_0x1a0534(0x17c)+_0x1a0534(0x171)+_0x1a0534(0x177)+_0x1a0534(0x176)+'d','measurementId':_0x1a0534(0x16b)+'QZ'};function _0x167f(_0x5e9c01,_0x1eec69){const _0x21b338=_0xcff4();return _0x167f=function(_0x17d807,_0x4bb513){_0x17d807=_0x17d807-(0x55a+-0x742+0x34a);let _0xcfd704=_0x21b338[_0x17d807];return _0xcfd704;},_0x167f(_0x5e9c01,_0x1eec69);}firebase[_0x1a0534(0x175)+_0x1a0534(0x16a)](firebaseConfig);
+
+  </script>
+</head>
+<body>
+  <div id='hover-menu'>
+    <div style='display:flex; flex-direction:row; justify-content:flex-end;'>
+      <button id='cit' onclick = 'closenotrr()'><strong>X</strong></button>
+      <script>
+        function closenotrr(){
+          document.getElementById("hover-menu").style.display = "none";
+        }
+      </script>
+    </div>
+    <style>
+      #hover-menu{
+        display:none;
+        flex-direction:column;
+        background:white;
+        padding:30px;
+        position:absolute;
+        z-index:987465637890;
+        border-radius:20px;
+        opacity: 0; /* Set initial opacity to 0 */
+        animation: fadeInAnimationuyt 0.5s ease-in forwards;
+      }
+      @keyframes fadeInAnimationuyt {
+        from {
+          opacity: 0; /* Start with opacity 0 */
+        }
+        to {
+          opacity: 1; /* End with opacity 1 */
+        }
+      }
+      #title{
+        color:black;
+        align-self:center;
+        margin-bottom:5px;
+      }
+      #cit{
+        background:none;
+        color:black;
+        border:none;
+      }
+      #input-bar{
+        display:flex;
+        flex-direction:row;
+        justify-content:space-around;
+      }
+      #input-bar-input{
+        border: 2px sold black;
+        border-radius:10px;
+      }
+      #input-bar-button{
+        border-radius:10px;
+        background:#007bff;
+        color:black;
+      }
+      #input-bar-button:active{
+        background:grey;
+      }
+      #input-bar-button:hover{
+        background:grey;
+      }
+    </style>
+    <script>
+      function centerElementById(elementId) {
+        var element = document.getElementById(elementId);
+        if (element) {
+          var viewportWidth = window.innerWidth;
+          var viewportHeight = window.innerHeight;
+
+          var elementWidth = element.offsetWidth;
+          var elementHeight = element.offsetHeight;
+
+          var leftOffset = (viewportWidth - elementWidth) / 2;
+          var topOffset = (viewportHeight - elementHeight) / 2;
+
+          // Ensure the element is positioned absolutely for centering
+          element.style.position = 'absolute';
+          element.style.left = '50%';
+          element.style.top = '50%';
+          element.style.transform = 'translate(-50%, -50%)';
+        } else {
+        }
+      }
+      centerElementById('hover-menu');
+    </script>
+    <div style='display:flex; flex-direction:row; justify-content:space-between;'>
+      <div id='title'>Monkey</div>
+    </div>
+    <div id='input-bar'>
+      <label></label>
+      <input id='input-bar-input' placeholder='Message..'>
+      <button id='input-bar-button'>Submit</button>
+    </div>
+  </div>
+  <style>
+    #user-profile{
+      display:none;
+      justify-content:center;
+      align-items:center;
+      position:absolute;
+      z-index:2000;
+      background:black;
+      color:white;
+      padding:30px;
+      border-radius:20px;
+      top:25px;
+      right:10px;
+      opacity: 0;
+      animation: slideFromRight 1s ease forwards;
+    }
+    #user-info{
+      display:flex;
+      flex-direction:column;
+    }
+    #user-image{
+      border-radius:50%;
+      width:150px;
+      height:150px;
+    }
+    @keyframes slideFromRight {
+      0% {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  </style>
+  <div id="user-profile">
+    <div id="user-info">
+      <div style='display:flex; justify-content:space-between; font-size:25px;'><p id='user-name' style='font-size:25px;'><strong>null</strong></p><strong><p id="user-x">X</p></strong></div>
+      <script>
+        document.getElementById('user-x').onclick = ()=>{
+          document.getElementById('user-profile').style.display = 'none';
+        }
+      </script>
+      <div style='display:flex; justify-content:flex-start;'></div>
+      <div style='display:flex; justify-content:center;'>
+      <img id="user-image" src="null" alt="User Image"></div>
+      <label for='user-id'><strong>User-ID</strong></label>
+      <div id='user-id'></div>
+      <label for='user-int'><strong>User-Interest's</strong></label>
+      <div id='user-int'></div>
+      <label for='user-bio'><strong>User-Bio</strong></label>
+      <div id='user-bio'></div>
+      <label for='user-email'><strong>User-Email</strong></label>
+      <div id='user-email'></div>
+    </div>
+  </div>
+  <div id="notification">
+    <span id="pop">Notification: </span>
+    <button id="cbb" onclick="closenot()">x</button>
+    <script>
+      function closenot(){
+        document.getElementById("notification").style.display = "none";
+      }
+    </script>
+  </div>
+  <style>
+    #ss{
+      display:none;
+      flex-direction:column;
+    }
+  </style>
+  <div id="ss" >
+  <input placeholder="Search by UID" class="form-control us" id="us">
+    <div style='display:flex; flex-direction:row; justify-content:space-around; align-items:center;'>
+    <p>Auto close menu upon opening chat </p>
+    <label class="switch" >
+      <input type="checkbox" id="toggleSwitch">
+      <span class="slider"></span>
+    </label>
+    </div>
+    <style>
+      .switch {
+        position:relative;
+        display:inline-block;
+        width: 60px;
+        height: 34px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 34px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background-color: #2196F3;
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+    </style>
+    <script>
+      document.getElementById("toggleSwitch").addEventListener("change", function() {
+        // Toggle logic
+        if (this.checked) {
+          // Toggle is on
+          sessionStorage.setItem('close-status' , 'true');
+          // Add your actions when the toggle is turned on here
+        } else {
+          // Toggle is off
+          sessionStorage.setItem('close-status' , false);
+          // Add your actions when the toggle is turned off here
+        }
+      });
+
+    </script>
+  <div id="s" >
+    <div id="userList" class="list-group"></div>
+  </div>
+  </div>
+  <div id="chatContainer" class="">
+    <div id="chatHeader" class="">
+      <div class="burger-menu" style="display:flex; flex-direction:row; justify-content: space-between;">
+
+        <div class="burger-icon" id="burger-icon">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+        <div class="menu" id="menu">
+          <button class="btn btn-outline-light btn-sm" onclick="logout()">Logout</button>
+          <button class="btn btn-outline-light btn-sm" id='cgc'>Create group</button>
+          <button class="btn btn-outline-light btn-sm" id='jgc'>Join a group</button>
+          <button class="btn btn-outline-light btn-sm" onclick="menutry()">Users</button>
+          <button class="btn btn-outline-light btn-sm" onclick='esc()'>Escape</button>
+          <a href="settings.html" target="_blank"><button class="btn btn-outline-light btn-sm">Settings</button></a>
+
+        </div>
+        <div id="stat/ccu" style="display:flex; flex-direction:row; overflow-x:scroll;">
+        <span id="currentChatUser" style="text-align:center;"></span>
+        <span id="status"></span></div>
+      </div>
+    </div>
+    <div class="menur" id="menur">
+      <button class="btn btn-outline-light btn-sm" onclick="report()">Report user</button>
+      <button class="btn btn-outline-light btn-sm" id="user-prof">Info</button>
+      <button class="btn btn-outline-light btn-sm" id="chatlock">Lock chat</button>
+      <button class="btn btn-outline-light btn-sm" id="chatunlock">Unlock chat</button>
+      <button class="btn btn-outline-light btn-sm" onclick="block()">Block user</button>
+      <button class="btn btn-outline-light btn-sm" onclick="uid()">Copy user's UID</button>
+      <button class="btn btn-outline-light btn-sm" onclick="cmx()">Copy message</button>
+    </div>
+    <div class="menur" id="groupmenu">
+      <button class="btn btn-outline-light btn-sm" onclick="cgm()">Copy message</button>
+    </div>
+    <div id="chatMessages">
+    </div>
+    <div id="chatInput" class="">
+      <div class="input-group">
+        <input id="messageInput" type="text" placeholder="Type a message" class="form-control">
+        <div class="input-group-append">
+          <button id="is">⇩</button>
+          <button id="sendButton" class="btn btn-primary">Send</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      function getMaxVisibleHeightInVh() {
+          // Get the viewport height
+          const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+
+          // Return viewport height directly in vh
+          return (viewportHeight / window.innerHeight) * 100;
+      }
+
+      // Example usage:
+      const maxHeightInVh = getMaxVisibleHeightInVh();
+      const e = document.querySelector('body');
+      const d = localStorage.getItem('device');
+      if(d==='true'){
+
+      }else{
+        e.style.height = maxHeightInVh + 'vh';
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@2"></script>
+    <script src="menu.js"></script>
+    <script src="report.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/0.10.0/forge.min.js"></script>
+    <script type="module" src="Main.js"></script>
+    <footer style='display:none;'>
+      <p><a href="privacy.html" target='_blank'>Privacy Policy </a><a href = "terms.html" target='_blank'>Terms & conditions</a> | &copy; 2024 Chatsy</p>
+    </footer>
+  </div>
+</body>
+</html>

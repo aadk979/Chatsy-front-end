@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Support</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/jpeg" href="icon.jpeg">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f8f9fa;
+    }
+    .form-container {
+      width: 400px;
+    }
+  </style>
+  <title>Chatsy support</title>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<div class="container form-container">
+  <h2 class="mt-4 mb-4" style="text-align:center;">How can we help you?</h2>
+  <form id="myForm">
+    <div class="form-group">
+      <label for="inputEmail">Email address</label>
+      <input type="email" class="form-control" id="inputEmail" required>
+      <small id="emailError" class="form-text text-danger"></small>
+    </div>
+    <div class="form-group">
+      <label for="inputMessage">Message</label>
+      <textarea class="form-control" id="inputMessage" rows="3" minlength="10" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary" style="text-align:center;">Submit</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById("myForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    // Get values from form inputs
+    var email = document.getElementById("inputEmail").value;
+    var message = document.getElementById("inputMessage").value;
+
+    // Check if the email is valid
+    if (!isValidEmail(email)) {
+      document.getElementById("emailError").innerText = "Not a valid email address";
+      return;
+    }
+
+    const socket = io('https://main-testing-server.onrender.com');
+
+    function generateCid() {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let randomId = '';
+
+      for (let i = 0; i < 20; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        randomId += characters.charAt(randomIndex);
+      }
+
+      return randomId;
+    }
+
+    document.getElementById("emailError").innerText = "";
+
+    if (message.length >= 10) {
+      const cidValue = generateCid();
+      socket.emit('spl', { e: email, m: message, cid: cidValue });
+      message = '';
+      email = '';
+
+      // Clear form fields
+      document.getElementById("inputEmail").value = '';
+      document.getElementById("inputMessage").value = '';
+
+      alert("Your request has been saved, case ID: " + cidValue + ". It may take up to 3 days for a response.");
+    } else {
+      alert("Please enter a message with at least 10 characters.");
+    }
+  });
+
+  // Function to check if the email is valid
+  function isValidEmail(email) {
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+</script>
+
+</body>
+</html>
+

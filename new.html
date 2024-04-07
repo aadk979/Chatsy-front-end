@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatsy Sign Up</title>
+  <link rel="icon" type="image/jpeg" href="icon.jpeg">
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8f9fa;
+    }
+    .signup-form {
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+    }
+    .signup-form h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #007bff; /* Hash code color for footer */
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+    }
+    .navbar {
+      background-color: #007bff !important; /* Hash code color for navbar */
+    }
+    a{
+      color:white;
+      text-decoration:none;
+    }
+    #loading-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 1);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .loading-spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    hr {
+      color: black;
+      font-weight: 800;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script defer src="./init-firebase.js"></script>
+  <script type="module">
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyDozohpjwzD_W8pOOGNNsp80fU5wbIwL8g",
+        authDomain: "invertible-vine-407013.firebaseapp.com",
+        projectId: "invertible-vine-407013",
+        storageBucket: "invertible-vine-407013.appspot.com",
+        messagingSenderId: "995781571816",
+        appId: "1:995781571816:web:eefa83e2f76e3a3f5c855d",
+        measurementId: "G-6SP4HZTNQZ"
+      };
+      function showLoadingSpinner() {
+        document.getElementById("loading-container").style.display = "flex";
+      }
+
+      // Function to hide the loading spinner
+      function hideLoadingSpinner() {
+        document.getElementById("loading-container").style.display = "none";
+      }
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      const sb = document.getElementById('signup');
+      sb.addEventListener('click', () => {
+        check();
+      });
+
+      function isPasswordStrong(password) {
+          const result = zxcvbn(password);
+          return result.score >= 3;
+      }
+
+      function check() {
+        showLoadingSpinner();
+        const e = document.getElementById("email");
+        const p = document.getElementById("password");
+        const d = document.getElementById("displayName");
+        const gg = true;
+        if (gg === true) {
+          if (e.value !== '' && p.value !== '' && d.value !== '') {
+            const chack = isPasswordStrong(p.value);
+            if (chack === true) {
+              addUser(e.value, p.value, d.value);
+              e.value = '';
+              p.value = '';
+              d.value = '';
+            } else {
+              hideLoadingSpinner();
+              alert('weak password');
+              p.value = '';
+            }
+          }
+        } else {
+          alert('You have to read and agree to the terms and conditions.');
+        }
+      }
+
+      function addUser(email, password, displayName) {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            user.updateProfile({
+              displayName: displayName
+            }).then(() => {
+              user.sendEmailVerification().then(() => {
+                firebase.auth().signOut();
+                hideLoadingSpinner();
+                alert(displayName + ' signed up successfully! A verification email has been sent to your email. Please verify your email before logging in.');
+                window.location.href = 'index.html';
+              }).catch((error) => {
+                hideLoadingSpinner();
+                console.error('Error sending email verification:', error);
+              });
+            }).catch((error) => {
+              hideLoadingSpinner();
+              console.error('Error updating display name:', error);
+            });
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error('Sign-up error:', errorCode, errorMessage);
+          });
+      }
+    
+      function sendPasswordResetEmail(x) {
+        const email = x;
+        firebase.auth().sendPasswordResetEmail(email)
+          .then(() => {
+            alert('Password reset email sent to ' + email);
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
+      }
+      const fpe = document.getElementById('fpe');
+      fpe.onclick = () => {
+        const email = prompt('Enter your email address:');
+        const r = sendPasswordResetEmail(email);
+      };
+  </script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Chatsy</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Sign up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="s.html">Support</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="fpe">
+          Forgot password
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="rl.html" target="_blank">
+          Remote logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="signup-form">
+    <h2>Sign Up</h2>
+    <!-- Sign Up Form -->
+    <form>
+      <div class="form-group">
+        <label for="displayName">Display Name</label>
+        <input type="text" class="form-control" id="displayName" placeholder="Enter display name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Password">
+      </div>
+      <button type="button" class="btn btn-primary btn-block" id="signup">Sign Up</button>
+    </form>
+    <hr>
+    <p class="text-center">Already have an account? <a style='decoration:none; color:#4193EF; font-weight:800;' href="index.html"> Login here</a></p>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p id="x11"><a href="privacy.html" target='_blank'>Privacy Policy || </a><a href = "terms.html" target='_blank'>Terms & conditions</a> || &copy; 2024 Chatsy</p>
+  </div>
+</footer>
+  <div id="loading-container">
+    <div class="loading-spinner"></div>
+  </div>
+
+</body>
+</html>
+
+

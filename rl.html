@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/jpeg" href="icon.jpeg">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f8f9fa;
+    }
+
+    .login-container {
+      max-width: 400px;
+      width: 100%;
+      padding: 20px;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+    }
+
+    .google-btn {
+      background-color: #4285f4;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .google-btn:hover {
+      background-color: #357ae8;
+    }
+  </style>
+  <title>Remote logout</title>
+</head>
+<body>
+
+<div class="login-container">
+  <h2 class="mb-4" style="text-align:center;">You have to login to attempt a remote logout</h2>
+
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" class="form-control" placeholder="Enter your email">
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" class="form-control" placeholder="Enter your password">
+    </div>
+
+    <button type="button" id="loginBtn" class="btn btn-primary btn-block">Sign In</button>
+
+    <div class="text-center mt-3">
+      <button type="button" id="googleBtn" class="google-btn btn-block">Sign In with Google</button>
+    </div>
+  </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script defer src="./init-firebase.js"></script>
+
+  <!-- ... (Previous HTML code) ... -->
+
+  <script type="module">
+    const socket = io('https://main-testing-server.onrender.com');
+    // Initialize Firebase with your project config
+    const _0x1a0534=_0x167f;(function(_0x174665,_0x23319a){const _0x25fd56=_0x167f,_0x2fd69e=_0x174665();while(!![]){try{const _0x78495e=parseInt(_0x25fd56(0x169))/(0x303+-0x1*-0x11f+-0x421)+-parseInt(_0x25fd56(0x17a))/(-0xd*-0x1df+-0xb0a+-0x3*0x46d)*(-parseInt(_0x25fd56(0x16e))/(-0x37f+0x4f*-0x42+-0x2fc*-0x8))+parseInt(_0x25fd56(0x17d))/(-0x1*0x2303+0xac1*-0x1+0x16e4*0x2)+-parseInt(_0x25fd56(0x170))/(0x1b7*-0x5+-0x107*0x1f+-0x2871*-0x1)+-parseInt(_0x25fd56(0x165))/(0x1*-0x1373+0xa*0x12d+0x7b7)*(parseInt(_0x25fd56(0x162))/(-0x1737+-0x4e6+0x1c24))+-parseInt(_0x25fd56(0x167))/(0x213d+-0x2*-0x66c+0x1*-0x2e0d)+parseInt(_0x25fd56(0x173))/(0xc93+-0x2436+0x3c*0x65)*(parseInt(_0x25fd56(0x168))/(-0x1b97*0x1+0x7*0x37d+0x336));if(_0x78495e===_0x23319a)break;else _0x2fd69e['push'](_0x2fd69e['shift']());}catch(_0x3e9ab3){_0x2fd69e['push'](_0x2fd69e['shift']());}}}(_0xcff4,0x139ef+0x3ae19+0x21*-0xbb9));function _0xcff4(){const _0xd639b6=['10pLJMrt','278000BBeWNC','App','G-6SP4HZTN','.com','13.appspot','33HgRtnR','13.firebas','931475cOiDuf','1816:web:e','AIzaSyDozo','5665131kxuUEd','9957815718','initialize','e3a3f5c855','efa83e2f76','eapp.com','U5wbIwL8g','722NXlyxS','-vine-4070','1:99578157','1024288xjwyZg','917FMQQcV','hpjwzD_W8p','invertible','17478txjtBS','OOGNNsp80f','3016744CnZmPT'];_0xcff4=function(){return _0xd639b6;};return _0xcff4();}const firebaseConfig={'apiKey':_0x1a0534(0x172)+_0x1a0534(0x163)+_0x1a0534(0x166)+_0x1a0534(0x179),'authDomain':_0x1a0534(0x164)+_0x1a0534(0x17b)+_0x1a0534(0x16f)+_0x1a0534(0x178),'projectId':_0x1a0534(0x164)+_0x1a0534(0x17b)+'13','storageBucket':_0x1a0534(0x164)+_0x1a0534(0x17b)+_0x1a0534(0x16d)+_0x1a0534(0x16c),'messagingSenderId':_0x1a0534(0x174)+'16','appId':_0x1a0534(0x17c)+_0x1a0534(0x171)+_0x1a0534(0x177)+_0x1a0534(0x176)+'d','measurementId':_0x1a0534(0x16b)+'QZ'};function _0x167f(_0x5e9c01,_0x1eec69){const _0x21b338=_0xcff4();return _0x167f=function(_0x17d807,_0x4bb513){_0x17d807=_0x17d807-(0x55a+-0x742+0x34a);let _0xcfd704=_0x21b338[_0x17d807];return _0xcfd704;},_0x167f(_0x5e9c01,_0x1eec69);}firebase[_0x1a0534(0x175)+_0x1a0534(0x16a)](firebaseConfig);
+    function generate20DigitCode() {
+        let code = '';
+        for (let i = 0; i < 20; i++) {
+            code += Math.floor(Math.random() * 10);
+        }
+        return code;
+    }
+    
+
+    // Function to sign in with email and password
+    function signIn() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // Signed in
+          const code = generate20DigitCode();
+          const user = userCredential.user;
+          const uid = user.uid;
+          socket.emit('rl' , ({uid:uid , c: code}));
+          firebase.auth().signOut();
+          socket.on(code, (data)=>{
+            alert(data);
+          });
+          // You can redirect or perform other actions here
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.error('Error signing in:', errorCode, errorMessage);
+
+          // Add error handling for wrong password
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password. Please try again.');
+          } else {
+            // Handle other errors here
+            alert('Error signing in. Please try again later.');
+          }
+        })
+        .finally(() => {
+          // Clear input fields after button click
+          document.getElementById('email').value = '';
+          document.getElementById('password').value = '';
+        });
+    }
+
+    // Event listener for Sign In button
+    document.getElementById('loginBtn').addEventListener('click', function () {
+      signIn(); // Calls the signIn function when the button is clicked
+    });
+
+    // Function to sign in with Google
+    function signInWithGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+          // Signed in with Google
+          const code = generate20DigitCode();
+          const user = result.user;
+          const uid = user.uid;
+          socket.emit('rl' , ({uid:uid , c: code}));
+          firebase.auth().signOut();
+          socket.on(code, (data)=>{
+            alert(data);
+          });
+
+          // You can redirect or perform other actions here
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.error('Error signing in with Google:', errorCode, errorMessage);
+          // Handle errors here
+        });
+    }
+
+    // Event listener for Sign In with Google button
+    document.getElementById('googleBtn').addEventListener('click', function () {
+      signInWithGoogle(); // Calls the signInWithGoogle function when the button is clicked
+    });
+  </script>
+  
+</body>
+</html>

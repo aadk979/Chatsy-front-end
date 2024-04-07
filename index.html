@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatsy Login</title>
+  <link rel="icon" type="image/jpeg" href="icon.jpeg">
+  <meta name="google-adsense-account" content="ca-pub-3728169738096191">
+  <link rel="apple-touch-icon" type="image/jpeg" href="icon.png">
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .login-form {
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-form h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .btn-google {
+      background-color: #DB4437;
+      color: #fff;
+      border: none;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #007bff;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .navbar {
+      background-color: #007bff !important;
+    }
+
+    #gg {
+      background: white;
+      border-radius: 50%;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    #loading-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 1);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .loading-spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    hr {
+      color: black;
+      font-weight: 800;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@2"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script defer src="./init-firebase.js"></script>
+  <script type="module">
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const _0x1a0534=_0x167f;(function(_0x174665,_0x23319a){const _0x25fd56=_0x167f,_0x2fd69e=_0x174665();while(!![]){try{const _0x78495e=parseInt(_0x25fd56(0x169))/(0x303+-0x1*-0x11f+-0x421)+-parseInt(_0x25fd56(0x17a))/(-0xd*-0x1df+-0xb0a+-0x3*0x46d)*(-parseInt(_0x25fd56(0x16e))/(-0x37f+0x4f*-0x42+-0x2fc*-0x8))+parseInt(_0x25fd56(0x17d))/(-0x1*0x2303+0xac1*-0x1+0x16e4*0x2)+-parseInt(_0x25fd56(0x170))/(0x1b7*-0x5+-0x107*0x1f+-0x2871*-0x1)+-parseInt(_0x25fd56(0x165))/(0x1*-0x1373+0xa*0x12d+0x7b7)*(parseInt(_0x25fd56(0x162))/(-0x1737+-0x4e6+0x1c24))+-parseInt(_0x25fd56(0x167))/(0x213d+-0x2*-0x66c+0x1*-0x2e0d)+parseInt(_0x25fd56(0x173))/(0xc93+-0x2436+0x3c*0x65)*(parseInt(_0x25fd56(0x168))/(-0x1b97*0x1+0x7*0x37d+0x336));if(_0x78495e===_0x23319a)break;else _0x2fd69e['push'](_0x2fd69e['shift']());}catch(_0x3e9ab3){_0x2fd69e['push'](_0x2fd69e['shift']());}}}(_0xcff4,0x139ef+0x3ae19+0x21*-0xbb9));function _0xcff4(){const _0xd639b6=['10pLJMrt','278000BBeWNC','App','G-6SP4HZTN','.com','13.appspot','33HgRtnR','13.firebas','931475cOiDuf','1816:web:e','AIzaSyDozo','5665131kxuUEd','9957815718','initialize','e3a3f5c855','efa83e2f76','eapp.com','U5wbIwL8g','722NXlyxS','-vine-4070','1:99578157','1024288xjwyZg','917FMQQcV','hpjwzD_W8p','invertible','17478txjtBS','OOGNNsp80f','3016744CnZmPT'];_0xcff4=function(){return _0xd639b6;};return _0xcff4();}const firebaseConfig={'apiKey':_0x1a0534(0x172)+_0x1a0534(0x163)+_0x1a0534(0x166)+_0x1a0534(0x179),'authDomain':_0x1a0534(0x164)+_0x1a0534(0x17b)+_0x1a0534(0x16f)+_0x1a0534(0x178),'projectId':_0x1a0534(0x164)+_0x1a0534(0x17b)+'13','storageBucket':_0x1a0534(0x164)+_0x1a0534(0x17b)+_0x1a0534(0x16d)+_0x1a0534(0x16c),'messagingSenderId':_0x1a0534(0x174)+'16','appId':_0x1a0534(0x17c)+_0x1a0534(0x171)+_0x1a0534(0x177)+_0x1a0534(0x176)+'d','measurementId':_0x1a0534(0x16b)+'QZ'};function _0x167f(_0x5e9c01,_0x1eec69){const _0x21b338=_0xcff4();return _0x167f=function(_0x17d807,_0x4bb513){_0x17d807=_0x17d807-(0x55a+-0x742+0x34a);let _0xcfd704=_0x21b338[_0x17d807];return _0xcfd704;},_0x167f(_0x5e9c01,_0x1eec69);}firebase[_0x1a0534(0x175)+_0x1a0534(0x16a)](firebaseConfig);
+
+  </script>
+  <script src="1.js" type="module"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Chatsy</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="new.html">Sign up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="s.html">Support</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="fpe">
+          Forgot password
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="rl.html" target="_blank">
+          Remote logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="login-form">
+    <h2>Login</h2>
+    <br/>
+    <!-- Email/Password Form -->
+    <form>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Password">
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id='signin'>Sign In</button>
+    </form>
+    <strong><hr></strong>
+    <button type="submit" style='background:#4B0082; border:none; display:flex; flex-direction:row; justify-content:space-around;' class="btn btn-primary btn-block" id='passkeys'>Sign in with Passkey</button>
+    <strong><hr></strong>
+    <!-- Sign in with Google -->
+    <button class="btn btn-primary btn-block" id="gb" style='background: #DB4437; border:none;'>
+      <img id="gg" src="google-logo-9808.png" alt="Google Logo" height="20px">
+      Sign in with Google
+    </button>
+  </div>
+</div>
+  
+<footer>
+  <div class="container">
+    <p id="x11"><a href="privacy.html" target='_blank'>Privacy Policy || </a><a href = "terms.html" target='_blank'>Terms & conditions</a> || &copy; 2024 Chatsy</p>
+  </div>
+</footer>
+
+  <div id="loading-container">
+    <div class="loading-spinner"></div>
+  </div>
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+  
+</html>
+

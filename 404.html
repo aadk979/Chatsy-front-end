@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Page Not Found</title>
+  </head>
+  <body>
+    <h1>Page not found</h1>
+    <p>This page will redirect to <a href="index.html">Home</a> in <span id="countdown">5</span> seconds. If not redirected in 5 seconds please click the link above..</p>
+    <script>
+      // JavaScript code for countdown
+      var countdownElement = document.getElementById('countdown');
+      var seconds = 5;
+
+      function updateCountdown() {
+        countdownElement.textContent = seconds;
+        if (seconds === 0) {
+          window.location.href = 'index.html';
+        } else {
+          seconds--;
+          setTimeout(updateCountdown, 1000);
+        }
+      }
+
+      // Start the countdown when the page loads
+      setTimeout(updateCountdown, 1000);
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Page</title>
+    <link rel="icon" type="image/jpeg" href="icon.jpeg">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: white;
+            color: #ffffff;
+        }
+
+        .settings-container {
+            display: flex;
+            justify-content: center;
+            flex-direction:row;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .settings-card {
+            display:flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 400px;
+            padding: 20px;
+            background-color: #007bff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .button-inline {
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        label {
+            color: #ffffff;
+        }
+
+        .btn-outline-secondary {
+            font-weight:800;
+            background:#0000C8;
+            color: white;
+            border-color: #ffffff;
+        }
+
+        .btn-outline-secondary:hover {
+            color: #000000;
+            background-color: #ffffff;
+        }
+
+        .form-control {
+            background-color:white;
+            color: black;
+        }
+
+        .form-control-file {
+            color: #ffffff;
+        }
+        input {
+          background: ;
+          color: black;
+          border:none;
+        }
+        button{
+          border:none;
+          background: #002ABB;
+          color:white;
+        }
+        #xxx{
+          border:none;
+          background: #002ABB;
+          color:white;
+        }
+        #xxx:hover{
+          border:none;
+          background: #355BDD;
+          color:white;
+        }
+        #xxx:disabled{
+          border:none;
+          background:#FF0000;
+          color:white;
+        }
+        #yyy{
+          border:none;
+          background: #002ABB;
+          color:white;
+        }
+        #yyy:hover{
+          border:none;
+          background: #355BDD;
+          color:white;
+        }
+        #yyy:disabled{
+          background:grey;
+        }
+        .ppp{
+          border:none;
+          background: #002ABB;
+          color:white;
+        }
+        .ppp:hover{
+          border:none;
+          background: #355BDD;
+          color:white;
+        }
+        #ppp{
+          border:none;
+          background: #002ABB;
+          color:white;
+        }
+        #ppp:hover{
+          border:none;
+          background: #355BDD;
+          color:white;
+        }
+        #pp{
+          border:none;
+          background: #002ABB;
+          color:white;
+        }
+        #pp:hover{
+          border:none;
+          background: #355BDD;
+          color:white;
+        }
+        #p{
+          border:none;
+          background: #002ABB;
+          color:white;
+        }
+        #p:hover{
+          border:none;
+          background: #355BDD;
+          color:white;
+        }
+        #notification {
+              display: none;
+              flex-direction:row;
+              align-items:center;
+              background-color: #d4edda; /* Light red background color */
+              color: #155724; /* Dark red text color */
+              height: 50px; /* Increased height for better visibility */
+              text-align: center;
+              border-radius: 8px; /* Slightly rounded corners */
+              position: absolute; /* Fixed position so it stays in place */
+              top: 25px; 
+              padding: 10px; /* Added padding for better spacing */
+              box-shadow: 0 2px 5px rgba(0, 0, 0, 2); /* Drop shadow for depth */
+              animation:slideFromLeft 1s forwards;
+              z-index: 1000; /* Higher z-index for better stacking */
+        }
+
+        #cbb{
+          font-size:25px;
+          background:transparent;
+          text-align:center;
+          color: #155724;
+          border:none;
+        }
+
+        @keyframes slideFromLeft {
+          0% { left: -100px; } /* Starting position (offscreen to the left) */
+          100% { left: 20px; } /* Ending position (left edge of the frame) */
+        }
+    </style>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/__/firebase/8.10.1/firebase.js"></script>
+  <script src="/__/firebase/init.js"></script>
+
+  <script defer src="./init-firebase.js"></script>
+  <script type="module">
+    //For Firebase JS SDK v7.20.0 and later, measurementId is optional 
+    const _0x1a0534=_0x167f;(function(_0x174665,_0x23319a){const _0x25fd56=_0x167f,_0x2fd69e=_0x174665();while(!![]){try{const _0x78495e=parseInt(_0x25fd56(0x169))/(0x303+-0x1*-0x11f+-0x421)+-parseInt(_0x25fd56(0x17a))/(-0xd*-0x1df+-0xb0a+-0x3*0x46d)*(-parseInt(_0x25fd56(0x16e))/(-0x37f+0x4f*-0x42+-0x2fc*-0x8))+parseInt(_0x25fd56(0x17d))/(-0x1*0x2303+0xac1*-0x1+0x16e4*0x2)+-parseInt(_0x25fd56(0x170))/(0x1b7*-0x5+-0x107*0x1f+-0x2871*-0x1)+-parseInt(_0x25fd56(0x165))/(0x1*-0x1373+0xa*0x12d+0x7b7)*(parseInt(_0x25fd56(0x162))/(-0x1737+-0x4e6+0x1c24))+-parseInt(_0x25fd56(0x167))/(0x213d+-0x2*-0x66c+0x1*-0x2e0d)+parseInt(_0x25fd56(0x173))/(0xc93+-0x2436+0x3c*0x65)*(parseInt(_0x25fd56(0x168))/(-0x1b97*0x1+0x7*0x37d+0x336));if(_0x78495e===_0x23319a)break;else _0x2fd69e['push'](_0x2fd69e['shift']());}catch(_0x3e9ab3){_0x2fd69e['push'](_0x2fd69e['shift']());}}}(_0xcff4,0x139ef+0x3ae19+0x21*-0xbb9));function _0xcff4(){const _0xd639b6=['10pLJMrt','278000BBeWNC','App','G-6SP4HZTN','.com','13.appspot','33HgRtnR','13.firebas','931475cOiDuf','1816:web:e','AIzaSyDozo','5665131kxuUEd','9957815718','initialize','e3a3f5c855','efa83e2f76','eapp.com','U5wbIwL8g','722NXlyxS','-vine-4070','1:99578157','1024288xjwyZg','917FMQQcV','hpjwzD_W8p','invertible','17478txjtBS','OOGNNsp80f','3016744CnZmPT'];_0xcff4=function(){return _0xd639b6;};return _0xcff4();}const firebaseConfig={'apiKey':_0x1a0534(0x172)+_0x1a0534(0x163)+_0x1a0534(0x166)+_0x1a0534(0x179),'authDomain':_0x1a0534(0x164)+_0x1a0534(0x17b)+_0x1a0534(0x16f)+_0x1a0534(0x178),'projectId':_0x1a0534(0x164)+_0x1a0534(0x17b)+'13','storageBucket':_0x1a0534(0x164)+_0x1a0534(0x17b)+_0x1a0534(0x16d)+_0x1a0534(0x16c),'messagingSenderId':_0x1a0534(0x174)+'16','appId':_0x1a0534(0x17c)+_0x1a0534(0x171)+_0x1a0534(0x177)+_0x1a0534(0x176)+'d','measurementId':_0x1a0534(0x16b)+'QZ'};function _0x167f(_0x5e9c01,_0x1eec69){const _0x21b338=_0xcff4();return _0x167f=function(_0x17d807,_0x4bb513){_0x17d807=_0x17d807-(0x55a+-0x742+0x34a);let _0xcfd704=_0x21b338[_0x17d807];return _0xcfd704;},_0x167f(_0x5e9c01,_0x1eec69);}firebase[_0x1a0534(0x175)+_0x1a0534(0x16a)](firebaseConfig); 
+    
+  </script>
+  <script type="module" src="Mm.js"></script>
+</head>
+<body>
+  <div id="notification">
+    <span id="pop">Notification: </span>
+    <button id="cbb" onclick="closenot()">x</button>
+    <script>
+      function closenot(){
+        document.getElementById("notification").style.display = "none";
+      }
+    </script>
+  </div>
+<div class="settings-container">
+    <div id= 'c1' class="settings-card" style='border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;'>
+        <h2 class="text-center"><strong>Settings</strong></h2>
+        
+        <span id="t" style="text-align: cente; font-weight: 600; margin-bottom:20px;  "></span>
+        
+        <form>
+
+            <div class="form-group">
+                <label for="displayName">Display Name</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="displayName" placeholder="Enter your display name">
+                    <div class="input-group-append">
+                        <button id="ppp" class="btn btn-outline-secondary" type="button">Change</button>
+                    </div>
+                </div>
+            </div>
+
+          
+            <div class="form-group">
+                <label for="escapeLink">Escape Link</label>
+                <div class="input-group">
+                    <input type="text" autocomplete="off" class="form-control" id="escapeLink" placeholder="Enter escape link">
+                    <div class="input-group-append">
+                        <button id='p'class="btn btn-outline-secondary" type="button" onclick="l()">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id = "3444">
+                <label for="escapeLink">Use Passkey for locked chats</label>
+                <div class="input-group">
+                    <div class="input-group-append">
+                      <div style="display:flex; flex-direction:column;">
+                        <button class="btn btn-outline-secondary" type="button" id="xxx">Setup Passkey</button>
+                        
+                        <button class="btn btn-outline-secondary" type="button" id="yyy">Delete Passkey</button></div>
+                      <script type="module">
+                        import { registerUser } from './passkey_chatsy_secure.js'
+                        function notification(text , type){
+                          if(type === 'error'){
+                            document.getElementById('pop').textContent = text;
+                            document.getElementById("notification").style.color = '#721c24';
+                            document.getElementById("cbb").style.color = '#721c24';
+                            document.getElementById("notification").style.backgroundColor = '#f8d7da';
+                            document.getElementById("notification").style.display = "flex";
+                            setTimeout(()=>{
+                              document.getElementById("notification").style.display = "none";
+                            }, 7000);
+                          }else if(type === "notification"){
+                            document.getElementById('pop').textContent = text;
+                            document.getElementById("notification").style.color = '#155724';
+                            document.getElementById("cbb").style.color = '#155724';
+                            document.getElementById("notification").style.backgroundColor = '#d4edda';
+                            document.getElementById("notification").style.display ="flex";
+                            setTimeout(()=>{
+                              document.getElementById("notification").style.display = "none";
+                            }, 7000);
+                          }
+                        }
+                        function generateRandomString(length) {
+                            const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                            let randomString = '';
+                            for (let i = 0; i < length; i++) {
+                                const randomIndex = Math.floor(Math.random() * charset.length);
+                                randomString += charset.charAt(randomIndex);
+                            }
+                            return randomString;
+                        }
+                        const socket = io('https://main-testing-server.onrender.com');
+                        const xxx = document.getElementById('xxx');
+                        const yyy = document.getElementById('yyy');
+                        const fire = JSON.parse(localStorage.getItem('user_data_firebase'));
+                        const user_email = fire.email;
+                        const user_name = fire.displayName;
+                        const uid = fire.uid;
+                        let return_2 = generateRandomString(30);
+                        socket.emit('web-auth-status' , ({uid: uid , return: return_2}));
+                        socket.on(return_2 , (data)=>{
+                          if(data === 'set'){
+                            document.getElementById("xxx").disabled = true;
+                            document.getElementById("xxx").innerHTML = 'Passkey already set up';
+                          }else{
+                            document.getElementById("yyy").disabled = true;
+                            document.getElementById("yyy").innerHTML = 'No Passkey detected';
+                          }
+                        });
+                        yyy.onclick = ()=>{
+                          const return1 = generateRandomString(30);
+                          socket.emit('web-auth-delete' , ({return: return1 , uid:uid}));
+                          socket.on(return1 , (data)=>{
+                            let res;
+                            if(data === 'Passkey deleted!'){
+                              res = 'notification'
+                            }else if(data === 'Failed to delete Passkey!'){
+                              res = 'error'
+                            }else if(data === 'No Passkey detected , false request!'){
+                              res = 'error'
+                            }else{
+                              res = 'error'
+                            }
+                            notification(data , res);
+                            document.getElementById("xxx").disabled = 
+                              
+                            document.getElementById("xxx").innerHTML = 'Setup Passkey';
+                            document.getElementById("yyy").disabled = true;
+                            document.getElementById("yyy").innerHTML = 'No Passkey detected';
+                          });
+                          
+                        }
+                        xxx.onclick = ()=>{
+                          registerUser(user_email , user_name , window.location.href)
+                          .then((res)=>{
+                            const return_code = generateRandomString(45);
+                            socket.emit('web-auth-setup' , ({uid: uid , credentialID: res.user_cred, challenge: res.verification_code , return: return_code}));
+                            socket.on(return_code , (data)=>{
+                              if(data === 200){
+                                notification('Passkey setup successfully! 🥳' , 'notification');
+                                localStorage.setItem('bio' , '200');
+                                document.getElementById("xxx").disabled = true;
+                                document.getElementById("xxx").innerHTML = 'Passkey already set up';
+                                document.getElementById("yyy").disabled = false;
+                                document.getElementById("yyy").innerHTML = 'Delete Passkey';
+                                
+                              }else if(data === 900){
+                                notifcation('Biometrics setup failed! 😥' , 'error')
+                              }
+                            })
+                          })
+                        }
+                      </script>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="backgroundImage">Chat Background Image</label>
+                <div class="input-group">
+                    <input type="file" class="form-control-file" id="imageInput">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" class="ppp"type="button" onclick='saveImageToSessionStorage()'>Save</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+   <!-- start of second settings card , for profile settings card -->
+    <div id='c2' class="settings-card" style='border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;'>
+      <style>
+        img{
+          border-radius:50%;
+        }
+      </style>
+        <h2 class="text-center"><strong>Profile Settings</strong></h2>
+      <div style='display:flex; justify-content:center; flex-direction:row; padding:10px;'><img id='profile-img' src="https://lh3.googleusercontent.com/a/ACg8ocJ9jVAJJzTg2_2s6pstIqdjiewiK5V2JaIpelEJ731N=s96-c" alt="User Image" style='height:150px; width:150px;'>
+        </div>
+      <p style='text-align:center;'><strong>You can change your profile picture in your google account.</strong></p>
+      <div style='display:flex; flex-direction:column; justify-content:space-between; padding:20px; height:200px;'>
+        <label><strong>Let others know your interests</strong></label>
+        <input type='text' placeholder='Interests...' id='int'>
+        <label><strong>How would you describe yourself</strong></label>
+        <input type='text' placeholder='Biography...' id='bio'>
+        <button style='margin-top:10px; height:40px; border-radius:5px;' id='update'>Update profile</button>
+      </div>
+      <h5><strong>Profile Visibility Notice</strong></h5>
+      <p>
+      Your profile picture, interests, and biography are visible to others on Chatsy. Please ensure they reflect a professional image. Thank you.</p>
+    </div>
+    <script>
+      function generateRandomString(length) {
+          const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+          let randomString = '';
+          for (let i = 0; i < length; i++) {
+              const randomIndex = Math.floor(Math.random() * charset.length);
+              randomString += charset.charAt(randomIndex);
+          }
+          return randomString;
+      }
+      function notification(text , type){
+        if(type === 'error'){
+          document.getElementById('pop').textContent = text;
+          document.getElementById("notification").style.color = '#721c24';
+          document.getElementById("cbb").style.color = '#721c24';
+          document.getElementById("notification").style.backgroundColor = '#f8d7da';
+          document.getElementById("notification").style.display = "flex";
+          setTimeout(()=>{
+            document.getElementById("notification").style.display = "none";
+          }, 7000);
+        }else if(type === "notification"){
+          document.getElementById('pop').textContent = text;
+          document.getElementById("notification").style.color = '#155724';
+          document.getElementById("cbb").style.color = '#155724';
+          document.getElementById("notification").style.backgroundColor = '#d4edda';
+          document.getElementById("notification").style.display ="flex";
+          setTimeout(()=>{
+            document.getElementById("notification").style.display = "none";
+          }, 7000);
+        }
+      }
+      const socket = io('https://main-testing-server.onrender.com');
+      const fire = JSON.parse(localStorage.getItem('user_data_firebase'));
+      const user_email = fire.email;
+      const user_name = fire.displayName;
+      const uid = fire.uid;
+      document.getElementById("profile-img").src = fire.photoURL;
+      document.getElementById('update').onclick = ()=>{
+        const int = document.getElementById('int').value;
+        const bio = document.getElementById('bio').value;
+        const return_code = generateRandomString(45);
+        socket.emit('profile-update' , ({uid:uid , bio: bio , int: int , email: user_email , photo:fire.photoURL , return: return_code}));
+        socket.on(return_code , (data)=>{
+          document.getElementById('int').value = '';
+          document.getElementById('bio').value = '';
+          notification(data.message , data.type);
+        });
+      }
+    </script>
+
+
+<!-- Bootstrap JS and dependencies -->
+  <script>
+    function matchHeight(firstElementId, secondElementId) {
+        const firstElement = document.getElementById(firstElementId);
+        const secondElement = document.getElementById(secondElementId);
+
+        if (firstElement && secondElement) {
+            const firstElementHeight = firstElement.clientHeight;
+            secondElement.style.height = firstElementHeight + "px";
+        } else {
+            console.error("One or both of the provided element IDs are invalid.");
+        }
+    }
+    setInterval(()=>{
+      matchHeight('c2' , 'c1');
+    },100);
+  </script>
+  
+  <script>
+    
+      const el = document.getElementById('escapeLink');
+      function l(){
+        localStorage.setItem('escl' , el.value);
+        el.value = '';
+        alert('Link saved succesfully. Note that the link you have provided will only be used for this session.');
+      }
+    
+      function saveImageToSessionStorage() {
+          const imageInput = document.getElementById('imageInput');
+
+          if (imageInput.files.length > 0) {
+              const selectedImage = imageInput.files[0];
+
+              const reader = new FileReader();
+
+              reader.onload = function (event) {
+                  localStorage.setItem('userImage', event.target.result);
+                  alert('Background image set succesfully. It will be visible the next time you open a chat.');
+
+                  // After 2 seconds, call the function to set the background
+                  
+              };
+
+              reader.readAsDataURL(selectedImage);
+          } else {
+              alert('No image selected.');
+          }
+      }
+
+      
+  </script>
+</body>
+</html>
