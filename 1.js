@@ -113,6 +113,7 @@ function login(email2, password2) {
             firebase.auth().signOut();
             hideLoadingSpinner();
             alert('It seems like you are currently logged in on another device. Please logout from said device and try again.If you dont have access to said device, please visit the remote logout page.');
+            window.location.reload;
           }else{
             hideLoadingSpinner();
             localStorage.setItem('bio' , data.bio.toString());
@@ -198,6 +199,7 @@ auth.onAuthStateChanged(async (user) => {
           if (data === 'logged') {
             firebase.auth().signOut();
             alert('It seems like you are currently logged in on another device. Please logout from said device and try again.');
+            window.location.reload;
           } else {
             const dd = 'n';
             if (dd.toLowerCase() === 'n') {
@@ -303,7 +305,7 @@ function openDatabase() {
 
 passkeys.onclick = () =>{
   passkeys.disabled = true;
-  passkeys.textContent = 'Verifing...';
+  passkeys.textContent = 'Verifying...';
   getUsersdb().then((user)=>{
     if(!user[0]){
       alert('You have to login with email and password or google sign in on this device at least once to use Passkey sign in.');
